@@ -1,0 +1,64 @@
+{
+	"name": "viteup",
+	"version": "0.0.1",
+	"description": "A better way to bundle your TypeScript libraries, powered by Vite + SWC.",
+	"type": "module",
+	"bin": "./dist/bin.js",
+	"module": "./dist/index.js",
+	"files": ["dist"],
+	"author": {
+		"name": "Timothée “Tim” Pillard",
+		"email": "github@tpillard.fr",
+		"url": "https://twitter.com/tpillard"
+	},
+	"keywords": ["vite", "swc", "typescript"],
+	"license": "MIT",
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			}
+		},
+		"./pure": {
+			"import": {
+				"types": "./dist/pure.d.ts",
+				"default": "./dist/pure.js"
+			}
+		},
+		"./bin": {
+			"import": {
+				"types": "./dist/bin.d.ts",
+				"default": "./dist/bin.js"
+			}
+		}
+	},
+	"engines": {
+		"node": "^18.0.0 || >=20.0.0"
+	},
+	"scripts": {
+		"clean": "rm -rf dist",
+		"build": "pnpm clean; tsc --build",
+		"check": "biome check src",
+		"check:fix": "npm run check -- --apply",
+		"prepublishOnly": "pnpm validate && pnpm build",
+		"test": "vitest",
+		"typecheck": "tsc --build --emitDeclarationOnly",
+		"validate": "pnpm check && pnpm typecheck && pnpm test -- --run"
+	},
+	"dependencies": {
+		"resolve-import": "^1.4.5",
+		"vite": "^5.1.5",
+		"vite-plugin-swc-transform": "^0.3.1",
+		"vitest": "^1.3.1"
+	},
+	"peerDependencies": {
+		"@types/node": "^18.0.0 || >=20.0.0"
+	},
+	"peerDependenciesMeta": {
+		"@types/node": {
+			"optional": true
+		}
+	}
+}

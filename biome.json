@@ -1,0 +1,5 @@
+{
+  "files": {
+    "ignore": ["integration-tests/*/cases/**/*.ts"]
+  }
+}

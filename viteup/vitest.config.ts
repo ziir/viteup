@@ -1,7 +1,11 @@
-import { defineProject } from "vitest/config";
+import { defineProject, mergeConfig } from "vitest/config";
+import { getResolvedViteConfig } from "./src/pure";
 
-export default defineProject({
-	test: {
-		include: ["./src/**/*.spec.ts"],
-	},
-});
+export default mergeConfig(
+	getResolvedViteConfig(),
+	defineProject({
+		test: {
+			include: ["./src/**/*.spec.ts"],
+		},
+	}),
+);

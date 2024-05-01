@@ -1,4 +1,4 @@
-import path = require("node:path");
+import path from "node:path";
 import type {
 	ConditionalValue,
 	ConditionalValueObject,

@@ -1,6 +1,7 @@
 {
 	"name": "viteup-integration-tests",
 	"version": "0.0.1",
+	"private": true,
 	"type": "module",
 	"scripts": {
 		"check": "biome check",
@@ -10,7 +11,7 @@
 		"validate": "pnpm check && pnpm typecheck && pnpm test -- --run"
 	},
 	"dependencies": {
-		"vite-plugin-swc-transform": "^0.3.1",
+		"vite-plugin-swc-transform": "^0.4.0-alpha",
 		"viteup": "workspace:*"
 	}
 }

@@ -1,0 +1,7 @@
+{
+  "name": "viteup-pure",
+  "type": "module",
+  "main": "../dist/esm/pure.js",
+  "types": "../dist/types/pure.d.ts",
+  "module": "../dist/esm/pure.js"
+}

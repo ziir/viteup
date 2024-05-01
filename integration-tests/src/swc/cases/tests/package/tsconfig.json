@@ -1,11 +1,11 @@
 {
-	"compilerOptions": {
-		"target": "ESNext",
-		"module": "ES2022",
-		"moduleResolution": "Bundler",
-		"isolatedModules": true,
-		"verbatimModuleSyntax": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true
-	}
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
 }

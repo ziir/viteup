@@ -1,18 +1,18 @@
 {
-	"compilerOptions": {
-		"pretty": true,
-		"target": "ES2022",
-		"module": "Node16",
-		"moduleResolution": "Node16",
+  "compilerOptions": {
+    "pretty": true,
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
 
-		"isolatedModules": true,
-		"verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
 
-		"forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true,
 
-		"strict": true,
-		"skipLibCheck": false,
+    "strict": true,
+    "skipLibCheck": false,
 
-		"types": ["node"]
-	}
+    "types": ["node"]
+  }
 }

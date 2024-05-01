@@ -1,6 +1,7 @@
 {
 	"name": "viteup-monorepo",
 	"version": "0.0.1",
+	"private": true,
 	"description": "Viteup Monorepo",
 	"engines": {
 		"node": "^18.0.0 || >=20.0.0"

@@ -1,6 +1,7 @@
 {
 	"name": "viteup-integration-tests",
 	"version": "0.0.1",
+	"private": true,
 	"type": "module",
 	"scripts": {
 		"check": "biome check",

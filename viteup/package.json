@@ -1,6 +1,6 @@
 {
 	"name": "viteup",
-	"version": "0.0.1",
+	"version": "0.0.2-alpha",
 	"description": "A better way to bundle your TypeScript libraries, powered by Vite + SWC.",
 	"type": "module",
 	"bin": "./dist/bin.js",
@@ -16,22 +16,12 @@
 	"exports": {
 		"./package.json": "./package.json",
 		".": {
-			"import": {
-				"types": "./dist/index.d.ts",
-				"default": "./dist/index.js"
-			}
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
 		},
 		"./pure": {
-			"import": {
-				"types": "./dist/pure.d.ts",
-				"default": "./dist/pure.js"
-			}
-		},
-		"./bin": {
-			"import": {
-				"types": "./dist/bin.d.ts",
-				"default": "./dist/bin.js"
-			}
+			"types": "./dist/pure.d.ts",
+			"default": "./dist/pure.js"
 		}
 	},
 	"engines": {

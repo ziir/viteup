@@ -1,6 +1,6 @@
 {
   "name": "viteup",
-  "version": "0.0.2-beta",
+  "version": "0.0.3",
   "description": "A better way to bundle your TypeScript libraries, powered by Vite + SWC.",
   "homepage": "https://github.com/ziir/viteup/#readme",
   "repository": {
@@ -36,16 +36,10 @@
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/types/index.d.ts",
-      "source": "./src/index.ts",
       "default": "./dist/esm/index.js"
-    },
-    "./viteup": {
-      "source": "./src/viteup.ts",
-      "default": null
     },
     "./pure": {
       "types": "./dist/types/pure.d.ts",
-      "source": "./src/pure.ts",
       "default": "./dist/esm/pure.js"
     }
   },
@@ -55,13 +49,13 @@
     "build:d.ts": "tsc --build",
     "check": "biome check src",
     "check:fix": "pnpm run check -- --apply",
-    "test": "vitest -c vitest.config.ts --run",
+    "test": "vitest -c vitest.config.ts",
     "validate": "pnpm check && pnpm test",
     "prepublishOnly": "publint"
   },
   "dependencies": {
     "resolve-import": "^1.4.5",
     "vite": "^5.0.0",
-    "vite-plugin-swc-transform": "^1.0.0 || >=0.4.0-beta.1"
+    "vite-plugin-swc-transform": "^1.0.0 || >=0.4.0"
   }
 }

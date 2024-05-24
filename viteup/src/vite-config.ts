@@ -8,7 +8,7 @@ import {
 } from "vite";
 import swc from "vite-plugin-swc-transform";
 
-function matchAllExternalModules(id: string) {
+export function matchAllExternalModules(id: string) {
 	return !(id.startsWith(".") || path.isAbsolute(id));
 }
 
@@ -23,13 +23,14 @@ export function getDefaultSwcTransformPluginOptions() {
 }
 
 export function getBaseConfig(
+	outputDir: string,
 	entrypoints: Record<string, string>,
 	packagePath = ".",
 ): UserConfig {
 	return {
 		root: packagePath,
 		build: {
-			outDir: "dist",
+			outDir: outputDir,
 			target: "esnext",
 			sourcemap: true,
 			minify: false,
@@ -67,11 +68,7 @@ export async function hasCompilerPluginOverride(
 	return compilerPluginOverride;
 }
 
-export async function getViteConfig(
-	entrypoints: Record<string, string>,
-	packagePath = ".",
-) {
-	const baseConfig = getBaseConfig(entrypoints, packagePath);
+export async function getViteConfig(baseConfig: UserConfig, packagePath = ".") {
 	const loadOverrideConfigResult = await loadConfigFromFile(
 		{
 			command: "build",

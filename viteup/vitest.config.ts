@@ -5,7 +5,7 @@ export default mergeConfig(
 	getResolvedViteConfig(),
 	defineProject({
 		test: {
-			include: ["./src/**/*.spec.ts"],
+			include: ["./src/__tests__/*.spec.ts"],
 		},
 	}),
 );

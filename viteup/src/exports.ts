@@ -11,5 +11,5 @@ export function getExports(pkg: PackageJson) {
 	if ("exports" in pkg && isExports(pkg.exports)) {
 		return pkg.exports;
 	}
-	throw new Error('missing package.json "exports"');
+	return {};
 }

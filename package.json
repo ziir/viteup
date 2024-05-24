@@ -15,7 +15,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.7.3",
 		"@types/node": "~20.11.30",
-		"publint": "^0.2.7",
+		"@vitest/coverage-v8": "^1.6.0",
+		"publint": "^0.2.8",
 		"typescript": "^5.4.5",
 		"vite": "^5.2.11",
 		"vite-node": "^1.6.0",

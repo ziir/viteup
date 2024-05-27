@@ -1,5 +1,18 @@
 {
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "organizeImports": {
+    "enabled": false
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "formatter": {
+    "enabled": true
+  },
   "files": {
-    "ignore": ["integration-tests/*/cases/**/*.ts"]
+    "ignore": ["integration-tests/*/cases/**/*.ts", "**/.tmp"]
   }
 }

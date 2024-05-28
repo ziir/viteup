@@ -1,0 +1,5 @@
+{
+  "name": "viteup-integration-tests-general-cases-dual",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs"
+}

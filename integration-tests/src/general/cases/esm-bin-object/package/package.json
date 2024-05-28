@@ -1,0 +1,8 @@
+{
+  "name": "viteup-integration-tests-general-cases-esm-bin-object",
+  "type": "module",
+  "bin": {
+    "awesome-bin": "./dist/awesome-bin.js",
+    "multi-awesome-bin": "./dist/multiple-awesome-bin.js"
+  }
+}

@@ -1,0 +1,4 @@
+{
+	"name": "viteup-integration-tests-general-cases-commonjs",
+	"main": "./dist/index.js"
+}

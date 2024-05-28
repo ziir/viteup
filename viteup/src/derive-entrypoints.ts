@@ -2,21 +2,53 @@ import path from "node:path";
 import {
 	isConditionalValueObject,
 	type ConditionalValueObject,
-	type ExportsSubpaths,
 	type PackageFieldEntries,
 	SUPPORTED_EXPORT_CONDITIONS,
+	type Exports,
+	type PackageFieldEntryTypeValueMap,
+	type PackageFieldEntryTypeValuePair,
+	isValueMap,
+	type DerivedOutputConfig,
+	SUPPORTED_SOURCE_FILES_EXTENSIONS,
 } from "./types.js";
+import { matchSourceFile } from "./match-source-files.js";
+
+export function deriveEntrypoint(
+	outDir: string,
+	outputPath: string,
+	pathToPackage = ".",
+) {
+	const normalizedOutputPath = path.normalize(outputPath);
+	const relativeOutputPath = path.relative(outDir, normalizedOutputPath);
+	const relativeOutputPathNoExtName = relativeOutputPath.replace(
+		path.extname(relativeOutputPath),
+		"",
+	);
+
+	const match = matchSourceFile(relativeOutputPathNoExtName, pathToPackage);
+	if (!match) {
+		throw new Error(
+			`No source file with supported extension ("${SUPPORTED_SOURCE_FILES_EXTENSIONS.join(
+				", ",
+			)}") found for source entry point "${relativeOutputPathNoExtName}" of "${normalizedOutputPath}"`,
+		);
+	}
+
+	return { name: match, value: relativeOutputPathNoExtName };
+}
 
 function lookupConditionalValueObject({
 	entrypoints,
 	outDir,
 	exportPath,
 	conditionalValue,
+	pathToPackage = ".",
 }: {
 	entrypoints: Record<string, string>;
 	outDir: string;
 	exportPath: string;
 	conditionalValue: ConditionalValueObject;
+	pathToPackage: string;
 }) {
 	for (const condition of SUPPORTED_EXPORT_CONDITIONS) {
 		const candidate = conditionalValue[condition];
@@ -31,6 +63,7 @@ function lookupConditionalValueObject({
 				outDir,
 				exportPath,
 				conditionalValue: candidate,
+				pathToPackage,
 			});
 			continue;
 		}
@@ -41,26 +74,7 @@ function lookupConditionalValueObject({
 			);
 		}
 
-		const outputPath = candidate;
-		const normalizedOutputPath = path.normalize(outputPath);
-
-		const relativeOutputPath = path.relative(outDir, normalizedOutputPath);
-
-		const relativeOutputPathNoExtName = relativeOutputPath.replace(
-			path.extname(relativeOutputPath),
-			"",
-		);
-
-		const name = relativeOutputPathNoExtName.replace("/index", "");
-		const sourceFilePathNoExt = path.join("./src", relativeOutputPathNoExtName);
-		const value = `./${sourceFilePathNoExt}`;
-
-		if (entrypoints[name] && entrypoints[name] !== value) {
-			throw new Error(
-				`Package export "${exportPath}" has a conflicting entrypoint name ("${name}") with another entrypoint`,
-			);
-		}
-
+		const { name, value } = deriveEntrypoint(outDir, candidate, pathToPackage);
 		entrypoints[name] = value;
 	}
 }
@@ -68,8 +82,19 @@ function lookupConditionalValueObject({
 export function lookupExports(
 	entrypoints: Record<string, string>,
 	outDir: string,
-	exports: ExportsSubpaths,
+	exports: Exports,
+	pathToPackage = ".",
 ) {
+	if (typeof exports === "string") {
+		const { name, value } = deriveEntrypoint(outDir, exports);
+		entrypoints[name] = value;
+		return;
+	}
+
+	if (Array.isArray(exports)) {
+		throw new Error("Package exports of type Array is not yet supported");
+	}
+
 	const exportEntries = Object.entries(exports);
 
 	for (const [exportPath, conditionalValue] of exportEntries) {
@@ -86,7 +111,39 @@ export function lookupExports(
 			outDir,
 			exportPath,
 			conditionalValue,
+			pathToPackage,
 		});
+	}
+}
+
+export function lookupPackageFieldEntryValue(
+	entrypoints: Record<string, string>,
+	outDir: string,
+	packageFieldEntryValue:
+		| Record<string, PackageFieldEntryTypeValuePair>
+		| PackageFieldEntryTypeValueMap,
+	pathToPackage = ".",
+) {
+	if (isValueMap(packageFieldEntryValue)) {
+		for (const [, innerValue] of Object.entries(packageFieldEntryValue.value)) {
+			const { name, value } = deriveEntrypoint(
+				outDir,
+				innerValue,
+				pathToPackage,
+			);
+			entrypoints[name] = value;
+		}
+	} else {
+		for (const [, { type, value: innerValue }] of Object.entries(
+			packageFieldEntryValue,
+		)) {
+			const { name, value } = deriveEntrypoint(
+				outDir,
+				innerValue,
+				pathToPackage,
+			);
+			entrypoints[name] = value;
+		}
 	}
 }
 
@@ -94,53 +151,49 @@ export function lookupPackageFieldEntries(
 	entrypoints: Record<string, string>,
 	outDir: string,
 	packageFields:
+		| PackageFieldEntries<"main">
+		| PackageFieldEntries<"main" | "module">
+		| PackageFieldEntries<"main" | "bin">
 		| PackageFieldEntries<"module">
-		| PackageFieldEntries<"bin">
-		| PackageFieldEntries<"module" | "bin">,
+		| PackageFieldEntries<"module" | "bin">
+		| PackageFieldEntries<"bin">,
+	pathToPackage = ".",
 ) {
 	for (const [field, packageFieldEntry] of Object.entries(packageFields)) {
-		for (const [, outputPath] of Object.entries(packageFieldEntry.value)) {
-			const normalizedOutputPath = path.normalize(outputPath);
-
-			const relativeOutputPath = path.relative(outDir, normalizedOutputPath);
-
-			const relativeOutputPathNoExtName = relativeOutputPath.replace(
-				path.extname(relativeOutputPath),
-				"",
-			);
-
-			const name = relativeOutputPathNoExtName.replace("/index", "");
-			const sourceFilePathNoExt = path.join(
-				"./src",
-				relativeOutputPathNoExtName,
-			);
-			const value = `./${sourceFilePathNoExt}`;
-
-			if (entrypoints[name] && entrypoints[name] !== value) {
-				throw new Error(
-					`Package field "${field}" has a conflicting entrypoint name ("${name}") with another entrypoint`,
-				);
-			}
-
-			entrypoints[name] = value;
-		}
+		lookupPackageFieldEntryValue(
+			entrypoints,
+			outDir,
+			packageFieldEntry.value,
+			pathToPackage,
+		);
 	}
 }
 
 export function deriveEntrypoints(
-	outDir: string,
-	exports: ExportsSubpaths,
+	outputConfig: DerivedOutputConfig,
+	exports: Exports | undefined,
 	packageFields?:
+		| PackageFieldEntries<"main">
+		| PackageFieldEntries<"main" | "module">
+		| PackageFieldEntries<"main" | "bin">
 		| PackageFieldEntries<"module">
-		| PackageFieldEntries<"bin">
-		| PackageFieldEntries<"module" | "bin">,
+		| PackageFieldEntries<"module" | "bin">
+		| PackageFieldEntries<"bin">,
+	pathToPackage = ".",
 ): Record<string, string> {
 	const entrypoints: Record<string, string> = {};
 
-	lookupExports(entrypoints, outDir, exports);
+	if (exports) {
+		lookupExports(entrypoints, outputConfig.outDir, exports, pathToPackage);
+	}
 
 	if (packageFields) {
-		lookupPackageFieldEntries(entrypoints, outDir, packageFields);
+		lookupPackageFieldEntries(
+			entrypoints,
+			outputConfig.outDir,
+			packageFields,
+			pathToPackage,
+		);
 	}
 
 	if (!Object.keys(entrypoints).length) {

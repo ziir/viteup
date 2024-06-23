@@ -1,24 +1,29 @@
 import { build as viteBuild } from "vite";
 
-import { getExports } from "./exports.js";
-import { matchSourceFiles } from "./match-source-files.js";
-import { getFromPackageFields } from "./package-fields.js";
+import { getPackageFieldEntries } from "./package-field-entries.js";
 import { readPackageJson } from "./package.js";
 import { getBaseConfig, getViteConfig } from "./vite-config.js";
-import { deriveOutputDirectory } from "./derive-output-directory.js";
+import { deriveOutputConfig } from "./derive-output-config.js";
 import { deriveEntrypoints } from "./derive-entrypoints.js";
+import { getPackageType } from "./package-type.js";
 
 export const pkg = readPackageJson();
-export const exports = getExports(pkg);
-export const packageFields = getFromPackageFields(pkg);
+export const pkgType = getPackageType(pkg);
+export const packageFieldEntries = getPackageFieldEntries(pkgType, pkg);
 
-export const outDir = deriveOutputDirectory(exports, packageFields);
-export const entrypoints = deriveEntrypoints(outDir, exports, packageFields);
+export const outputConfig = deriveOutputConfig(
+	pkg.exports,
+	pkgType,
+	packageFieldEntries,
+);
 
-matchSourceFiles(entrypoints);
+export const entrypoints = deriveEntrypoints(
+	outputConfig,
+	pkg.exports,
+	packageFieldEntries,
+);
 
-export const baseViteConfig = getBaseConfig(outDir, entrypoints);
-
-export const viteConfig = getViteConfig(baseViteConfig);
-
-export const build = async () => await viteBuild(await viteConfig);
+export const build = async () =>
+	await viteBuild(
+		await getViteConfig(await getBaseConfig(outputConfig, entrypoints)),
+	);

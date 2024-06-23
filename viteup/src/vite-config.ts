@@ -6,7 +6,7 @@ import {
 	loadConfigFromFile,
 	mergeConfig,
 } from "vite";
-import swc from "vite-plugin-swc-transform";
+import type { DerivedOutputConfig } from "./types";
 
 export function matchAllExternalModules(id: string) {
 	return !(id.startsWith(".") || path.isAbsolute(id));
@@ -22,22 +22,32 @@ export function getDefaultSwcTransformPluginOptions() {
 	} as const;
 }
 
-export function getBaseConfig(
-	outputDir: string,
+export async function getBaseConfig(
+	outputConfig: DerivedOutputConfig,
 	entrypoints: Record<string, string>,
 	packagePath = ".",
-): UserConfig {
+): Promise<UserConfig> {
+	let swc = null;
+	try {
+		swc = await import("vite-plugin-swc-transform");
+	} catch (err) {}
+
+	const outputFormats: Array<"cjs" | "es"> = [];
+	if ("commonjs" in outputConfig) outputFormats.push("cjs");
+	if ("module" in outputConfig) outputFormats.push("es");
+
 	return {
 		root: packagePath,
 		build: {
-			outDir: outputDir,
-			target: "esnext",
+			outDir: outputConfig.outDir,
 			sourcemap: true,
 			minify: false,
 			reportCompressedSize: false,
 			lib: {
-				entry: entrypoints,
-				formats: ["es"],
+				entry: Object.fromEntries(
+					Object.entries(entrypoints).map(([k, v]) => [v, k]),
+				),
+				formats: outputFormats,
 			},
 			rollupOptions: {
 				external: matchAllExternalModules,
@@ -46,7 +56,7 @@ export function getBaseConfig(
 				},
 			},
 		},
-		plugins: [swc(getDefaultSwcTransformPluginOptions())],
+		plugins: swc ? [swc.default(getDefaultSwcTransformPluginOptions())] : [],
 	};
 }
 
@@ -89,7 +99,7 @@ export async function getViteConfig(baseConfig: UserConfig, packagePath = ".") {
 			overrideConfig.plugins,
 		);
 
-		if (compilerPluginOverride) {
+		if (compilerPluginOverride || overrideConfig.plugins.length === 0) {
 			// biome-ignore lint/style/noNonNullAssertion: we always define plugins in the base config, at least the compiler plugin
 			baseConfig.plugins!.shift();
 		}

@@ -1,5 +1,5 @@
 import path from "node:path";
-import { describe, expect, it, vi, afterAll } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { readPackageJson } from "viteup/pure";
 
 describe("general", () => {

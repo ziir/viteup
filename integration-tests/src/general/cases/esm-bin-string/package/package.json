@@ -1,0 +1,5 @@
+{
+	"name": "viteup-integration-tests-general-cases-esm-bin-string",
+	"type": "module",
+	"bin": "./dist/index.js"
+}

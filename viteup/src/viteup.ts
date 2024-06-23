@@ -2,4 +2,6 @@
 
 import { build } from "./index.js";
 
-await build();
+(async () => {
+	await build();
+})();

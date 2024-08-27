@@ -1,0 +1,14 @@
+{
+  "name": "viteup-integration-tests-general-cases-ts-with-js-export",
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./extra": {
+      "node": "./extra.cjs",
+      "default": null
+    }
+  }
+}

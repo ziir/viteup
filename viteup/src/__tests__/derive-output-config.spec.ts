@@ -205,6 +205,21 @@ describe("deriveOutputConfig", () => {
 				});
 			});
 
+			it('derives the normalized output directory for a trivial single "." short-hand export', () => {
+				expect(
+					deriveOutputConfig(
+						{
+							".": "./dist/index.js",
+						},
+						packageType,
+						{} as PackageFieldEntries,
+					),
+				).toStrictEqual({
+					outDir: "dist",
+					[packageType]: true,
+				});
+			});
+
 			it('derives the normalized output directory for a trivial single "." export', () => {
 				expect(
 					deriveOutputConfig(

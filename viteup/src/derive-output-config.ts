@@ -148,9 +148,13 @@ export function lookupExports(
 		throw new Error("Package exports of type Array is not yet supported");
 	}
 
-	for (const [exportPath, conditionalValue] of Object.entries(exports)) {
+	for (let [exportPath, conditionalValue] of Object.entries(exports)) {
 		if (exportPath.endsWith(".json")) continue;
 		if (exportPath.endsWith(".css")) continue;
+
+		if (typeof conditionalValue === "string") {
+			conditionalValue = { default: conditionalValue };
+		}
 
 		if (!isConditionalValueObject(conditionalValue)) {
 			throw new Error(

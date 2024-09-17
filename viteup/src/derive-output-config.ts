@@ -150,6 +150,7 @@ export function lookupExports(
 
 	for (const [exportPath, conditionalValue] of Object.entries(exports)) {
 		if (exportPath.endsWith(".json")) continue;
+		if (exportPath.endsWith(".css")) continue;
 
 		if (!isConditionalValueObject(conditionalValue)) {
 			throw new Error(

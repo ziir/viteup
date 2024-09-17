@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"check": "biome check",
-		"check:fix": "pnpm check -- --apply",
+		"check:fix": "pnpm check --write",
 		"test": "vitest",
 		"typecheck": "tsc --build --emitDeclarationOnly",
 		"validate": "pnpm check && pnpm typecheck && pnpm test -- --run"

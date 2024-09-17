@@ -13,6 +13,6 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["integration-tests/*/cases/**/*.ts", "**/.tmp"]
+    "ignore": ["integration-tests/*/cases", "**/.tmp"]
   }
 }

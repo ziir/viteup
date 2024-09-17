@@ -149,6 +149,25 @@ describe("deriveOutputConfig", () => {
 					`Package export "." does not include a valid "import" conditional value`,
 				);
 			});
+
+			it("ignores some common valid exports (JSON, CSS)", () => {
+				expect(
+					deriveOutputConfig(
+						{
+							".": {
+								default: "./dist/index.js",
+							},
+							"./lib/*.json": "./lib/*.json",
+							"./lib/*.css": "./lib/*.css",
+						},
+						packageType,
+						{} as PackageFieldEntries,
+					),
+				).toStrictEqual({
+					outDir: "dist",
+					[packageType]: true,
+				});
+			});
 		});
 
 		describe("when exports exhibit different, non-overlapping output directories", () => {
@@ -177,6 +196,21 @@ describe("deriveOutputConfig", () => {
 				expect(
 					deriveOutputConfig(
 						"./dist/index.js",
+						packageType,
+						{} as PackageFieldEntries,
+					),
+				).toStrictEqual({
+					outDir: "dist",
+					[packageType]: true,
+				});
+			});
+
+			it('derives the normalized output directory for a trivial single "." short-hand export', () => {
+				expect(
+					deriveOutputConfig(
+						{
+							".": "./dist/index.js",
+						},
 						packageType,
 						{} as PackageFieldEntries,
 					),

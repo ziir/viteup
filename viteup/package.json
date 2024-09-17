@@ -48,7 +48,7 @@
     "build:src": "vite-node src/viteup.ts",
     "build:d.ts": "tsc --build",
     "check": "biome check src",
-    "check:fix": "pnpm run check -- --apply",
+    "check:fix": "pnpm run check --write",
     "test": "vitest -c vitest.config.ts",
     "validate": "pnpm check && pnpm test",
     "prepublishOnly": "pnpm check && publint --strict"

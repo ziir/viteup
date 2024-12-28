@@ -6,7 +6,7 @@ This software is **experimental**.
 
 ## Description
 
-A better (opinionated) way to bundle your TypeScript libraries, powered by [Vite](https://vitejs.dev) + [SWC](https://swc.rs).
+A better (opinionated) way to compile your TypeScript libraries, powered by [Vite](https://vitejs.dev) + [SWC](https://swc.rs).
 
 - Output format(s) & directory derived from **package.json exports** & other _package.json fields_.
 - **SWC** compiler integration with [vite-plugin-swc-transform](https://github.com/ziir/vite-plugin-swc-transform) by default

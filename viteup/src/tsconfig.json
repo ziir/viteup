@@ -1,10 +1,10 @@
 {
-	"extends": "../../tsconfig.base",
-	"compilerOptions": {
-		"rootDir": ".",
-		"declarationDir": "../dist/types",
-		"tsBuildInfoFile": "tsconfig.src.tsbuildinfo"
-	},
-	"include": ["**/*"],
-	"exclude": ["__tests__"]
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "rootDir": ".",
+    "declarationDir": "../dist/types",
+    "tsBuildInfoFile": "tsconfig.src.tsbuildinfo"
+  },
+  "include": ["**/*"],
+  "exclude": ["__tests__"]
 }

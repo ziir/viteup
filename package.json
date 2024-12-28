@@ -1,25 +1,23 @@
 {
-	"name": "viteup-monorepo",
-	"version": "0.0.1",
-	"private": true,
-	"description": "Viteup Monorepo",
-	"engines": {
-		"node": "^18.0.0 || >=20.0.0"
-	},
-	"type": "module",
-	"scripts": {
-		"check:fix": "pnpm -r check:fix",
-		"prepare": "pnpm -r build && pnpm t",
-		"test": "vitest --run"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.8.2",
-		"@types/node": "~20.11.30",
-		"@vitest/coverage-v8": "^1.6.0",
-		"publint": "^0.2.8",
-		"typescript": "^5.5.2",
-		"vite": "^5.3.1",
-		"vite-node": "^1.6.0",
-		"vitest": "^1.6.0"
-	}
+  "name": "viteup-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Viteup Monorepo",
+  "engines": {
+    "node": "^18.0.0 || ^20.0.0 || >=22.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "check:write": "pnpm -r check:fix",
+    "prepare": "pnpm -r build && pnpm t",
+    "test": "vitest --run"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "~22.10.2",
+    "publint": "^0.2.12",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6",
+    "vitest": "^2.1.8"
+  }
 }

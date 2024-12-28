@@ -1,20 +1,23 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { build } from "viteup/pure";
+import { build } from "viteup/api";
 
 describe("cjs-bin-string", () => {
-	it("builds a CommonJS package with a package.json['bin'] string field", async () => {
-		const results = await build(path.join(import.meta.dirname, "package"));
-		expect(results[0].output[0].code).toMatchInlineSnapshot(`
-			"'use strict';
+  it("builds a CommonJS package with a package.json['bin'] string field", async () => {
+    const results = await build(
+      { build: { write: false } },
+      path.join(import.meta.dirname, "package")
+    );
+    expect(results[0].output[0].code).toMatchInlineSnapshot(`
+      "'use strict';
 
-			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+      Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 
-			const foo = 'bar';
+      const foo = "bar";
 
-			exports.foo = foo;
-			//# sourceMappingURL=index.js.map
-			"
-		`);
-	});
+      exports.foo = foo;
+      //# sourceMappingURL=index.js.map
+      "
+    `);
+  });
 });

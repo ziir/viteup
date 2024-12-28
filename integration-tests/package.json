@@ -1,17 +1,17 @@
 {
-	"name": "viteup-integration-tests",
-	"version": "0.0.1",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"check": "biome check",
-		"check:fix": "pnpm check --write",
-		"test": "vitest",
-		"typecheck": "tsc --build --emitDeclarationOnly",
-		"validate": "pnpm check && pnpm typecheck && pnpm test -- --run"
-	},
-	"dependencies": {
-		"vite-plugin-swc-transform": "1.0.1",
-		"viteup": "workspace:*"
-	}
+  "name": "viteup-integration-tests",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "biome check",
+    "check:fix": "pnpm check --write",
+    "test": "vitest",
+    "typecheck": "tsc --build --emitDeclarationOnly",
+    "validate": "pnpm check && pnpm typecheck && pnpm test -- --run"
+  },
+  "dependencies": {
+    "vite-plugin-swc-transform": "1.1.0-alpha.2",
+    "viteup": "workspace:*"
+  }
 }

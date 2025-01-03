@@ -11,7 +11,7 @@
     "validate": "pnpm check && pnpm typecheck && pnpm test -- --run"
   },
   "dependencies": {
-    "vite-plugin-swc-transform": "1.1.0-alpha.2",
+    "vite-plugin-swc-transform": "1.1.0",
     "viteup": "workspace:*"
   }
 }

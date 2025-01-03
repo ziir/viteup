@@ -1,6 +1,6 @@
 {
   "name": "viteup",
-  "version": "0.0.5-alpha.3",
+  "version": "0.0.5",
   "description": "A better way to compile your TypeScript libraries, powered by Vite + SWC.",
   "homepage": "https://github.com/ziir/viteup/#readme",
   "repository": {
@@ -57,7 +57,7 @@
     "vite": "^6.0.0"
   },
   "optionalDependencies": {
-    "vite-plugin-swc-transform": "^1.1.0-alpha.2"
+    "vite-plugin-swc-transform": "^1.1.0"
   },
   "devDependencies": {}
 }

@@ -6,6 +6,7 @@ import {
   getDefaultSwcTransformPluginOptions,
   getBaseViteConfig,
   getViteConfig,
+  matchAllExternalModules,
 } from "./vite-config.ts";
 import { deriveOutputConfig } from "./derive-output-config.ts";
 import { deriveEntrypoints } from "./derive-entrypoints.ts";
@@ -17,6 +18,7 @@ export {
   getDefaultSwcTransformPluginOptions,
   getBaseViteConfig,
   getViteConfig,
+  matchAllExternalModules,
 };
 
 export async function getResolvedViteConfig(pathToPackage = ".") {

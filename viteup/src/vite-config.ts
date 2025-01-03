@@ -113,15 +113,22 @@ export async function getViteConfig(
 
   const { config: overrideConfig } = overrideConfigResult;
 
-  if (Array.isArray(overrideConfig.plugins)) {
-    const compilerPluginOverride = await hasCompilerPluginOverride(
-      overrideConfig.plugins,
-    );
+  let removeBaseConfigCompilerPlugin = !!overrideConfig.esbuild;
 
-    if (compilerPluginOverride || overrideConfig.plugins.length === 0) {
-      // biome-ignore lint/style/noNonNullAssertion: we always define plugins in the base config, at least the compiler plugin
-      baseConfig.plugins!.shift();
+  if (Array.isArray(overrideConfig.plugins)) {
+    removeBaseConfigCompilerPlugin =
+      removeBaseConfigCompilerPlugin || overrideConfig.plugins.length === 0;
+
+    if (!removeBaseConfigCompilerPlugin) {
+      removeBaseConfigCompilerPlugin = await hasCompilerPluginOverride(
+        overrideConfig.plugins,
+      );
     }
+  }
+
+  if (removeBaseConfigCompilerPlugin) {
+    // biome-ignore lint/style/noNonNullAssertion: we always define plugins in the base config, at least the compiler plugin
+    baseConfig.plugins!.shift();
   }
 
   return mergeConfig(baseConfig as InlineConfig, overrideConfig);

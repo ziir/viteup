@@ -1,12 +1,16 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { build } from "viteup/pure";
+import { build } from "viteup/api";
 
 describe("swc", () => {
-	describe("tests", () => {
-		it("builds an ESM package containing exports with a Vite config override & custom SWC options", async () => {
-			const results = await build(path.join(import.meta.dirname, "package"));
-			expect(results[0].output[0].code).toMatchInlineSnapshot(`
+  describe("tests", () => {
+    it("builds an ESM package containing exports with a Vite config override & custom SWC options", async () => {
+      const results = await build(
+        { build: { write: false } },
+        path.join(import.meta.dirname, "package")
+      );
+
+      expect(results[0].output[0].code).toMatchInlineSnapshot(`
 				"function _ts_decorate(decorators, target, key, desc) {
 				    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 				    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,6 +42,6 @@ describe("swc", () => {
 				//# sourceMappingURL=index.js.map
 				"
 			`);
-		});
-	});
+    });
+  });
 });

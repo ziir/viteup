@@ -1,13 +1,13 @@
 {
-	"name": "viteup-integration-tests-swc-cases-tests",
-	"type": "module",
-	"exports": {
-		"./package.json": "./package.json",
-		".": {
-			"import": {
-				"types": "./dist/esm/index.d.ts",
-				"default": "./dist/esm/index.js"
-			}
-		}
-	}
+  "name": "viteup-integration-tests-swc-cases-tests",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      }
+    }
+  }
 }

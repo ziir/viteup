@@ -10,9 +10,28 @@
     }
   },
   "formatter": {
-    "enabled": true
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "bracketSpacing": true,
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    }
   },
   "files": {
-    "ignore": ["integration-tests/*/cases/**/*.ts", "**/.tmp"]
+    "ignore": ["integration-tests/*/cases", "**/.tmp", "viteup/dist"]
   }
 }

@@ -1,4 +1,4 @@
 {
-	"name": "viteup-integration-tests-general-cases-esm-bin-string",
-	"bin": "./dist/index.js"
+  "name": "viteup-integration-tests-general-cases-esm-bin-string",
+  "bin": "./dist/index.js"
 }

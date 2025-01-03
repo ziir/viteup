@@ -1,7 +1,0 @@
-{
-  "name": "viteup-api",
-  "type": "module",
-  "main": "../dist/esm/api.js",
-  "types": "../dist/types/api.d.ts",
-  "module": "../dist/esm/api.js"
-}

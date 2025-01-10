@@ -12,6 +12,7 @@ import {
   SUPPORTED_SOURCE_FILES_EXTENSIONS,
 } from "./types.ts";
 import { matchSourceFile } from "./match-source-files.ts";
+import { shouldSkipExport } from "./utils.ts";
 
 export function deriveEntrypoint(
   outDir: string,
@@ -98,8 +99,10 @@ export function lookupExports(
   const exportEntries = Object.entries(exports);
 
   for (let [exportPath, conditionalValue] of exportEntries) {
-    if (exportPath.endsWith(".json")) continue;
+    const skipExportResult = shouldSkipExport(exportPath);
 
+    if(skipExportResult) continue;
+    
     if (typeof conditionalValue === "string") {
       conditionalValue = { default: conditionalValue };
     }

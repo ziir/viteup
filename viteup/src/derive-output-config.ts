@@ -151,7 +151,7 @@ export function lookupExports(
   for (let [exportPath, conditionalValue] of Object.entries(exports)) {
     const skipExportResult = shouldSkipExport(exportPath);
 
-    if(skipExportResult) continue;
+    if (skipExportResult) continue;
 
     if (typeof conditionalValue === "string") {
       conditionalValue = { default: conditionalValue };
@@ -159,7 +159,7 @@ export function lookupExports(
 
     if (!isConditionalValueObject(conditionalValue)) {
       throw new Error(
-        `Package export "${exportPath}" does not include a valid conditional value`
+        `Package export "${exportPath}" does not include a valid conditional value`,
       );
     }
 

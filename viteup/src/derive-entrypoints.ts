@@ -101,8 +101,8 @@ export function lookupExports(
   for (let [exportPath, conditionalValue] of exportEntries) {
     const skipExportResult = shouldSkipExport(exportPath);
 
-    if(skipExportResult) continue;
-    
+    if (skipExportResult) continue;
+
     if (typeof conditionalValue === "string") {
       conditionalValue = { default: conditionalValue };
     }

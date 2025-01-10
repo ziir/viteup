@@ -565,11 +565,11 @@ describe("deriveEntrypoints", () => {
             "./foo/styles.css": "./dist/foo/styles.css",
             "./ioo/": "./dist/ioo/",
             "./hoo/": "./dist/hoo/",
-          }
-        )
+          },
+        ),
       ).toStrictEqual({
         "src/index.ts": "index",
-        "src/goo/index.ts": "goo/index"
+        "src/goo/index.ts": "goo/index",
       });
     });
   });

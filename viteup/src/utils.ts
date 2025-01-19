@@ -1,4 +1,4 @@
-import { SUPPORTED_EXPORT_CONDITIONS } from "./types";
+import { SUPPORTED_EXPORT_CONDITIONS } from "./types.ts";
 
 export function isObject(obj: unknown) {
   return typeof obj === "object" && obj !== null;

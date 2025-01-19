@@ -541,4 +541,36 @@ describe("deriveEntrypoints", () => {
       );
     });
   });
+
+  describe("when provided a standard package.json with multiple type of exports: one export w/ types + default conditions, the package json export, one css export and one folder exports", () => {
+    it("derives exports", () => {
+      expect(
+        deriveEntrypoints(
+          {
+            module: true,
+            outDir: "dist",
+          },
+          {
+            "./package.json": "./package.json",
+            ".": {
+              types: "./dist/index.d.ts",
+              source: "./src/index.ts",
+              default: "./dist/index.mjs",
+            },
+            "./goo": {
+              types: "./dist/goo/index.d.ts",
+              source: "./src/goo/index.ts",
+              default: "./dist/goo/index.mjs",
+            },
+            "./foo/styles.css": "./dist/foo/styles.css",
+            "./ioo/": "./dist/ioo/",
+            "./hoo/": "./dist/hoo/",
+          },
+        ),
+      ).toStrictEqual({
+        "src/index.ts": "index",
+        "src/goo/index.ts": "goo/index",
+      });
+    });
+  });
 });

@@ -55,7 +55,7 @@ npm run build
 ```json
 {
   "name": "my-library",
-  ["type": "commonjs",]
+  "type": "commonjs",
   "main": "./dist/index.js",
   "scripts": {
     "build": "viteup"
@@ -68,7 +68,7 @@ npm run build
 ```json
 {
   "name": "my-library",
-  ["type": "commonjs",]
+  "type": "commonjs",
   "exports": "./dist/index.js",
   "scripts": {
     "build": "viteup"
@@ -122,7 +122,7 @@ npm run build
 ```json
 {
   "name": "my-library",
-  ["type": "commonjs",]
+  "type": "commonjs",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "exports": {

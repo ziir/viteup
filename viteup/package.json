@@ -58,6 +58,5 @@
   },
   "optionalDependencies": {
     "vite-plugin-swc-transform": "^1.1.0"
-  },
-  "devDependencies": {}
+  }
 }

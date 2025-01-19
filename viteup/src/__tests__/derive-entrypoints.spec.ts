@@ -552,24 +552,21 @@ describe("deriveEntrypoints", () => {
           },
           {
             "./package.json": "./package.json",
-            ".": {
-              types: "./dist/index.d.ts",
-              source: "./src/index.ts",
-              default: "./dist/index.mjs",
-            },
-            "./goo": {
-              types: "./dist/goo/index.d.ts",
-              source: "./src/goo/index.ts",
-              default: "./dist/goo/index.mjs",
-            },
-            "./foo/styles.css": "./dist/foo/styles.css",
-            "./ioo/": "./dist/ioo/",
-            "./hoo/": "./dist/hoo/",
+            ".": "./dist/index.mjs",
+            "./foo.js": "./dist/foo.mjs",
+            "./bar": "./dist/bar/index.mjs",
+            "./not-yet-supported-as-input.css":
+              "./dist/not-yet-supported-as-input.css",
+            "./assets-directory-trailing-slash-so-ignored/":
+              "./assets-directory-trailing-slash-so-ignored/",
+            "alt-assets-directory-trailing-slash-so-ignored/":
+              "alt-assets-directory-trailing-slash-so-ignored/",
           },
         ),
       ).toStrictEqual({
         "src/index.ts": "index",
-        "src/goo/index.ts": "goo/index",
+        "src/bar/index.ts": "bar/index",
+        "src/foo.ts": "foo",
       });
     });
   });

@@ -14,7 +14,8 @@ import {
   type DerivedOutputConfig,
   type OutputConfigInit,
 } from "./types.ts";
-import { isObject, shouldSkipExport } from "./utils.ts";
+import { isObject } from "./utils.ts";
+import { shouldSkipExport } from "./exports.ts";
 
 function getModuleFormatForCondition(
   packageType: PackageType,
@@ -149,9 +150,7 @@ export function lookupExports(
   }
 
   for (let [exportPath, conditionalValue] of Object.entries(exports)) {
-    const skipExportResult = shouldSkipExport(exportPath);
-
-    if (skipExportResult) continue;
+    if (shouldSkipExport(exportPath)) continue;
 
     if (typeof conditionalValue === "string") {
       conditionalValue = { default: conditionalValue };
